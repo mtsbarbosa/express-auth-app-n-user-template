@@ -1,0 +1,20 @@
+version: "2"
+services:
+  web:
+    container_name: web
+    restart: always
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - NODE_DATABASE_URL=${NODE_DATABASE_URL}
+    links:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ../../data/db:/db
+    ports:
+      - "27017:27017"

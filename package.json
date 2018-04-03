@@ -1,0 +1,46 @@
+{
+  "name": "express-auth-app-n-user-template",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "test-unit": "export NODE_ENV=test && export NODE_DATABASE_URL=mongodb://mongod:27017/express-auth-app-n-user-template-test mocha \"tests/**/*.spec-root.js\" \"tests/**/*.unit.spec.js\" --timeout 10000 --exit",
+    "test-integration": "export NODE_ENV=test && export NODE_DATABASE_URL=mongodb://mongod:27017/express-auth-app-n-user-template-test && mocha \"tests/**/*.spec-root.js\" \"tests/**/*.integration.spec.js\" --timeout 10000 --exit",
+    "test": "export NODE_ENV=test && export NODE_DATABASE_URL=mongodb://localhost:27017/express-auth-app-n-user-template-test && mocha \"tests/**/*.spec-root.js\" \"tests/**/*.spec.js\" --timeout 10000 --exit",
+    "migrate": "export MIGRATION_CONFIG_PATH=./migrations/config.js && mongoose-migrate-2"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "~1.18.2",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "chai-http": "^3.0.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.15.5",
+    "factory-girl": "^5.0.2",
+    "filter-properties": "^1.0.0",
+    "jsonwebtoken": "^8.1.1",
+    "mocha": "^4.1.0",
+    "mongoose": "^4.13.10",
+    "mongoose-migrate-2": "^0.2.2",
+    "morgan": "^1.9.0",
+    "pug": "2.0.0-beta11",
+    "require-dir": "^0.3.2",
+    "serve-favicon": "~2.4.5"
+  },
+  "developmentDependencies": {
+    "babel-preset-env": "^1.6.1",
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
+    "mocha": "^4.0.1",
+    "factory-girl": "^5.0.1"
+  },
+  "testDependencies": {
+    "babel-preset-env": "^1.6.1",
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
+    "mocha": "^4.0.1",
+    "factory-girl": "^5.0.1"
+  }
+}
