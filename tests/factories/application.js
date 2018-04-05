@@ -7,7 +7,8 @@ factory.define('application', Application, {
     name: factory.chance('word',{syllables: 3}),
     description: factory.chance('sentence',{words: 8}),
     hash_key: factory.chance('string',{length: 10}),
-    root: true
+    root: true,
+    user: factory.assoc('user','_id')
 });
 
 factory.define('not_root_application', Application, {
@@ -15,5 +16,6 @@ factory.define('not_root_application', Application, {
     name: factory.chance('word',{syllables: 3}),
     description: factory.chance('sentence',{words: 8}),
     hash_key: factory.chance('string',{length: 10}),
-    root: false
+    root: false,
+    user: factory.assoc('user','_id')
 });

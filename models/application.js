@@ -11,6 +11,7 @@ module.exports = { schema: function(){
                                               description:  { type: String, required: false},
                                               hash_key:     { type: String, required: true},
                                               root:         { type: Boolean, required: true},
+                                              user:         { type: Schema.Types.ObjectId, ref: 'User', required: true },
                                           }));
 
                               return schema;

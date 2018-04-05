@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test-unit": "export NODE_ENV=test && export NODE_DATABASE_URL=mongodb://mongod:27017/express-auth-app-n-user-template-test mocha \"tests/**/*.spec-root.js\" \"tests/**/*.unit.spec.js\" --timeout 10000 --exit",
+    "test-unit": "export NODE_ENV=test && export NODE_DATABASE_URL=mongodb://localhost:27017/express-auth-app-n-user-template-test && mocha \"tests/**/*.spec-root.js\" \"tests/**/*.unit.spec.js\" --timeout 10000 --exit",
     "test-integration": "export NODE_ENV=test && export NODE_DATABASE_URL=mongodb://mongod:27017/express-auth-app-n-user-template-test && mocha \"tests/**/*.spec-root.js\" \"tests/**/*.integration.spec.js\" --timeout 10000 --exit",
     "test": "export NODE_ENV=test && export NODE_DATABASE_URL=mongodb://localhost:27017/express-auth-app-n-user-template-test && mocha \"tests/**/*.spec-root.js\" \"tests/**/*.spec.js\" --timeout 10000 --exit",
     "migrate": "export MIGRATION_CONFIG_PATH=./migrations/config.js && mongoose-migrate-2"
