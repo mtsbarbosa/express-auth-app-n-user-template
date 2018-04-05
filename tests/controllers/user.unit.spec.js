@@ -71,7 +71,25 @@ describe('User Controller', () => {
       }
     });
   });
-  describe('#activate(user)', () => {
+  describe('#activate(user_id)', () => {
+    it('should return format error if id is weird ', async() => {
+      user_controller.activate("123")
+        .should.be.rejectedWith(error.IdFormatError, '_id provided is invalid');
+    });
+    it('should return not found error if user is not found ', async() => {
+      user_controller.activate(mongoose.Types.ObjectId())
+          .should.be.rejectedWith(error.NotFoundError, 'Not found');
+    });
+    it('should allow to activate user ', async() => {
+      try{
+        await user_controller.activate(new_user._id);
+        var user_activated = await user_controller.findOne(new_user._id, 'active');
+        console.log(user_activated);
+        expect(user_activated.active).to.equal(true);
+      }catch(err){
+        assert(false);
+      }
+    });
   });
   describe('#login(user)', () => {
   });
