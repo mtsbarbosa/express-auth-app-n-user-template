@@ -29,5 +29,17 @@ module.exports = {
     }catch(err){
       console.log('Error to authenticate not root => ', err);
     }
+  },
+  authenticate_user: async function(basic_fixtures){
+    try{
+      var auth =
+          await chai.request(server)
+                    .post('/express-auth-app-n-user-template/user/authenticate')
+                    .set('content-type', 'application/x-www-form-urlencoded')
+                    .send({email: basic_fixtures.master_user.object.email, password: basic_fixtures.master_user.object.password});
+      return auth;
+    }catch(err){
+      console.log('Error to authenticate => ', err);
+    }
   }
 }

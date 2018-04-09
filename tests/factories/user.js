@@ -7,7 +7,7 @@ factory.define('user', User, {
     name: factory.chance('word',{syllables: 3}),
     email: factory.chance('email'),
     password: factory.chance('string',{length: 10}),
-    active: false,
+    active: true,
     is_master: false//,
     //applications: factory.assocMany('application', 2, '_id')
 });

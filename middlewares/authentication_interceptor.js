@@ -3,7 +3,8 @@ var jwt = require('jsonwebtoken');
 var sessions = require('../sessions');
 
 module.exports = function(req, res, next) {
-  if(req.originalUrl == '/express-auth-app-n-user-template/authenticate')
+  if(req.originalUrl == '/express-auth-app-n-user-template/authenticate'
+      || req.originalUrl == '/express-auth-app-n-user-template/user/authenticate')
     return next();
   // check header or url parameters or post parameters for token
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -32,7 +33,7 @@ module.exports = function(req, res, next) {
       } else {
         // if everything is good, save to request for use in other routes
         req.decoded = decoded;
-        req.session = sessions.user[token];
+        req.session = sessions.user[me_token];
         next();
       }
     });
