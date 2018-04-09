@@ -10,9 +10,11 @@ var should = chai.should();
 var error = require('../../helpers/error');
 var mongoose = require('mongoose');
 var factoryGirlConfig = require('../config/factory-girl-config');
+var sessions = require('../../sessions')
 
 var new_user;
 var try_user;
+var inactive_user;
 var same_email_user;
 var no_name_user;
 var no_email_user;
@@ -33,6 +35,10 @@ describe('User Controller', () => {
     try_user._id = mongoose.Types.ObjectId();
     try_user.email = 'user2@test.com';
 
+    inactive_user = JSON.parse(JSON.stringify(new_user));
+    inactive_user._id = mongoose.Types.ObjectId();
+    inactive_user.email = 'user3@test.com';
+
     no_name_user = JSON.parse(JSON.stringify(try_user));
     delete no_name_user.name;
     no_email_user = JSON.parse(JSON.stringify(try_user));
@@ -41,6 +47,7 @@ describe('User Controller', () => {
     delete no_password_user.password;
 
     new_user = await user_controller.sign_up(new_user);
+    inactive_user = await user_controller.sign_up(inactive_user);
   });
 
   describe('#sign_up(user)', () => {
@@ -84,7 +91,6 @@ describe('User Controller', () => {
       try{
         await user_controller.activate(new_user._id);
         var user_activated = await user_controller.findOne(new_user._id, 'active');
-        console.log(user_activated);
         expect(user_activated.active).to.equal(true);
       }catch(err){
         assert(false);
@@ -92,6 +98,32 @@ describe('User Controller', () => {
     });
   });
   describe('#login(user)', () => {
+    it('should return format error if email is weird ', async() => {
+      user_controller.login(null,new_user.password)
+        .should.be.rejectedWith(error.IdFormatError, 'email provided is invalid');
+      user_controller.login('',new_user.password)
+        .should.be.rejectedWith(error.IdFormatError, 'email provided is invalid');
+    });
+    it('should return not found error if user is not found ', async() => {
+      user_controller.login('user999@test.com','test')
+          .should.be.rejectedWith(error.NotFoundError, 'Not found');
+    });
+    it('should return not found error if user is inactive ', async() => {
+      user_controller.login(inactive_user.email, inactive_user.password)
+          .should.be.rejectedWith(error.NotFoundError, 'Not found');
+    });
+    it('should return token and register session', async() => {
+      try{
+        var token = await user_controller.login(new_user.email, new_user.password);
+        expect(token).to.be.an('string');
+        expect(token).to.not.be.empty;
+        expect(sessions.user).to.have.any.keys(token);
+        expect(sessions.user[token].user).to.not.be.null;
+      }catch(err){
+        console.log(err);
+        assert(false);
+      }
+    });
   });
   describe('#edit(user)', () => {
   });

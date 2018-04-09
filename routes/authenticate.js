@@ -25,7 +25,7 @@ router.post('/', function(req, res, next) {
             var token = jwt.sign(payload, config.secret, {
               expiresIn: 1440 // expires in 24 hours
             });
-            sessions.all[token] = {
+            sessions.application[token] = {
               application: application,
               date: new Date()
             };
@@ -50,7 +50,7 @@ router.post('/', function(req, res, next) {
               var token = jwt.sign(payload, config.secret, {
                 expiresIn: 1440 // expires in 24 hours
               });
-              sessions.all[token] = {
+              sessions.application[token] = {
                 application: application,
                 date: new Date()
               };
